@@ -279,7 +279,6 @@
 		<script type="text/javascript">
 			if("ontouchend" in document) document.write("<script src='../assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
-        <script src="../assets/js/bootbox.min.js"></script>
 		<!-- inline scripts related to this page -->
 
 		<script type="text/javascript">
@@ -303,7 +302,7 @@
                         } else
                             location.href = '/management';
                     } else {
-                        bootbox.alert(result.msg);
+                        alert(result.msg);
                     }
                 });
             }
