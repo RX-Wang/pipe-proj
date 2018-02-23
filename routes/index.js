@@ -11,8 +11,4 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-// 上传背景图片
-router.post('/upload_bgImg', upload.single('upload_file'), function(req, res) {
-  PipeImgController.upload_bgImg(req, res);
-});
 module.exports = router;

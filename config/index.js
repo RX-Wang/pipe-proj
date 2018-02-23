@@ -5,7 +5,7 @@ var mongo = {
   // "password": "pipe_proj" ,
   "name"    : "" ,
   "db"      : "pipe_proj"
-}
+};
 var generate_mongo_url = function (obj) {
   obj.hostname = (obj.hostname || 'localhost');
   obj.port     = (obj.port || 27017);
@@ -17,6 +17,12 @@ var generate_mongo_url = function (obj) {
   }
 };
 module.exports = {
-  db: generate_mongo_url(mongo),
-  port: 3001,
+    db: generate_mongo_url(mongo),
+    port: 3001,
+    settings: {
+        cookie_encrypt_secret   : 'pipe_wanTong',
+        cookie_name             : 'wanTongGuanYe',
+        company_name            : '万通管业',
+        company_full_name       : '招远汇丰预拌混凝土有限公司'
+    }
 };

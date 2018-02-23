@@ -1,176 +1,181 @@
 <%- include ../component/common_header.html -%>
-  <div class="main-container" id="main-container">
+<div class="main-container" id="main-container">
     <script type="text/javascript">
-      try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+        try {
+            ace.settings.check('main-container', 'fixed')
+        } catch (e) {
+        }
     </script>
 
     <div class="main-container-inner">
-      <a class="menu-toggler" id="menu-toggler" href="#">
-        <span class="menu-text"></span>
-      </a>
-      <%- include ../component/side-bar.html -%>
-      <div class="main-content">
-					<div class="breadcrumbs" id="breadcrumbs">
-						<script type="text/javascript">
-							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
-						</script>
+        <a class="menu-toggler" id="menu-toggler" href="#">
+            <span class="menu-text"></span>
+        </a>
+        <%- include ../component/side-bar.html -%>
+        <div class="main-content">
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try {
+                        ace.settings.check('breadcrumbs', 'fixed')
+                    } catch (e) {
+                    }
+                </script>
 
-						<ul class="breadcrumb">
-							<li>
-								<i class="icon-home home-icon"></i>
-								<a href="/management">首页</a>
-							</li>
-							<li class="active">
-                  <a href="/management/bgImg">背景图片管理</a>
-              </li>
-              <li class="active">
-                  <%if(data.editType === 'add'){%>
-                    添加背景图片
-                  <%} else if (data.editType === 'edit') {%>
-                    修改背景图片
-                  <%} else {%>
-                    查看背景图片
-                  <%}%>
-              </li>
-						</ul>
-					</div>
-        <div class="page-content">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="row">
-                <div class="col-xs-12">
-                  <div class="widget-box">
-                    <div class="widget-header">
-                        <h4 class="smaller">
-                            <%if(data.editType === 'add'){%>
-                              新增背景
-                            <%} else if (data.editType === 'edit') {%>
-                              修改背景
-                            <%} else {%>
-                              查看背景
-                            <%}%>  
-                        </h4>
-                    </div>
-                    <div class="widget-body">
-                      <div class="widget-main">
-                        <form class="form-horizontal" role="form">
-                          <div class="form-group">
-                              <label class="col-sm-3 control-label no-padding-right" for="doctorName"> 背景图名称 </label>
-                              <div class="col-sm-9">
-                                  <input type="text" id="bgImgName" placeholder="背景图名称" name="bgImgName" value="<%=data.bgImgName || ''%>" class="col-xs-10 col-sm-5"/>
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> 展示位置 </label>
-
-                              <div class="col-sm-9">
-                                  <select class="col-xs-10 col-sm-5" id="form-field-2" name="bgPasition_id">
-                                      <option value="0">--选择位置--</option>
-                                      <%if(data.bgPosations && data.bgPosations.length > 0){for(var i = 0;i < data.bgPosations.length ; i++ ){var bgP = data.bgPosations[i];%>
-                                        <option value="<%= bgP._id %>,<%= bgP.bgPosationName %>" <% if(bgP._id === data.bgPasition_id){ %> selected <%}%> >
-                                            <%=bgP.bgPosationName%>
-                                        </option>
-                                        <%}}%>
-                                  </select>
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-sm-3 control-label no-padding-right" for="form-field-gender"> 使用状态 </label>
-                              <div class="col-sm-9">
-                                  <span class="radio" style="display:inline">
-                                    <label>
-                                      <input name="form-field-radio" type="radio" class="ace" <%= data.useStatus === '1' ? 'checked' : ''%> />
-                                      <span class="lbl">启用</span>
-                                    </label>
-                                  </span>
-            
-                                  <span class="radio" style="display:inline">
-                                    <label>
-                                      <input name="form-field-radio" type="radio" class="ace" <%= data.useStatus === '0' ? 'checked' : ''%> />
-                                      <span class="lbl">禁用</span>
-                                    </label>
-                                  </span>
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <label class="col-sm-3 control-label no-padding-right" for="editor">背景图描述 </label>
-                              <div class="col-sm-9">
-                                  <textarea id="editor" class="wysiwyg-editor  col-sm-5" style="border: 1px solid #BBC0CA"><%=data.description || ''%> </textarea>
-                                  <!--</form>-->
-                              </div>
-                          </div>
-                          <input type="hidden" name="doctor_id" value="<%=data._id || ''%>">
-                          <input id="image_url" type="hidden" name="pic_url" value="<%=data.avatar || ''%>">
-                        </form>
-                        <form id="img_upload" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" action="/upload_bgImg">
-                          <div class="form-group">
-                              <label class="col-sm-3 control-label no-padding-right" for="form-field-6"> 背景图 </label>
-                              <div class="col-sm-9">
-                                  <input id="file_select" class="col-xs-10 col-sm-5" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this);">
-                              </div>
-                              <img id="img_widget" src="<%=data.avatar || ''%>" style="margin: 20px 14px;max-width:260px;" class="<%if(!data._id){%> hidden <%}%>"/><br>
-                          </div>
-                        </form>
-                        <div class="form-group">
-                          <div class="col-sm-3"></div>
-                          <div class="col-sm-9 ">
-                              <a class="btn btn-success col-xs-10 col-sm-2" onclick="submit_bgImg(this)">提交</a>
-                          </div>
-                        </div>
-                        <div class="space-24"></div>
-                        <hr>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="icon-home home-icon"></i>
+                        <a href="/management">首页</a>
+                    </li>
+                    <li class="active">
+                        <a href="/management/bgImg">背景图片管理</a>
+                    </li>
+                    <li class="active">
+                        <%if(data.editType === 'add'){%>
+                        添加背景图片
+                        <%} else if (data.editType === 'edit') {%>
+                        修改背景图片
+                        <%} else {%>
+                        查看背景图片
+                        <%}%>
+                    </li>
+                </ul>
             </div>
-          </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="widget-box">
+                                    <div class="widget-header">
+                                        <h4 class="smaller">
+                                            <%if(data.editType === 'add'){%>
+                                            新增背景
+                                            <%} else if (data.editType === 'edit') {%>
+                                            修改背景
+                                            <%} else {%>
+                                            查看背景
+                                            <%}%>
+                                        </h4>
+                                    </div>
+                                    <div class="widget-body">
+                                        <div class="widget-main">
+                                            <form class="form-horizontal" role="form">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="bgImgName"> 背景图名称 </label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" id="bgImgName" placeholder="背景图名称"
+                                                               name="bgImgName" value="<%=data.bgImgName || ''%>"
+                                                               class="col-xs-10 col-sm-5"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="form-field-2"> 展示位置 </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="col-xs-10 col-sm-5" id="form-field-2" name="bgPosition_id">
+                                                            <option value="0">--选择位置--</option>
+                                                            <%if(data.bgPosations && data.bgPosations.length >
+                                                            0){for(var i = 0;i < data.bgPosations.length ; i++ ){var bgP = data.bgPosations[i];%>
+                                                            <option value="<%= bgP._id %>,<%= bgP.bgPosationName %>"
+                                                            <% if(bgP._id === data.bgPosition_id){ %> selected <%}%> >
+                                                            <%=bgP.bgPosationName%>
+                                                            </option>
+                                                            <%}}%>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="form-field-gender"> 使用状态 </label>
+                                                    <div class="col-sm-9">
+                                          <span class="radio" style="display:inline">
+                                            <label>
+                                              <input name="useStatus" value="1" type="radio" class="ace" <%= data.useStatus === '1' ? 'checked' : ''%> />
+                                              <span class="lbl">启用</span>
+                                            </label>
+                                          </span>
+
+                                                        <span class="radio" style="display:inline">
+                                            <label>
+                                              <input name="useStatus" value="0" type="radio" class="ace" <%= data.useStatus === '0' ? 'checked' : ''%> />
+                                              <span class="lbl">禁用</span>
+                                            </label>
+                                          </span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="description">背景图描述 </label>
+                                                    <div class="col-sm-9">
+                                                                <textarea id="description" class="wysiwyg-editor  col-sm-5"
+                                                                          style="border: 1px solid #BBC0CA"><%=data.description || ''%> </textarea>
+                                                        <!--</form>-->
+                                                    </div>
+                                                </div>
+                                                <!-- 背景图片ID -->
+                                                <input type="hidden" name="bgImg_id" value="<%=data._id || ''%>">
+                                                <input id="imgUrl" type="hidden" name="imgUrl"
+                                                       value="<%=data.imgUrl || ''%>">
+                                            </form>
+                                            <form id="img_upload" method="post" enctype="multipart/form-data"
+                                                  class="form-horizontal" role="form" action="/management/upload_bgImg">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right" for="form-field-6"> 背景图( 图片尺寸：1280 * 400 ) </label>
+                                                    <div class="col-sm-9">
+                                                        <input id="file_select" class="col-xs-10 col-sm-5" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this);">
+                                                    </div>
+                                                    <img id="img_widget" src="<%=data.imgUrl || ''%>" style="margin: 20px 14px;max-width:260px;" class="<%if(!data._id){%> hidden <%}%>"/><br>
+                                                </div>
+                                            </form>
+                                            <div class="form-group">
+                                                <div class="col-sm-3"></div>
+                                                <div class="col-sm-9 ">
+                                                    <a class="btn btn-success col-xs-10 col-sm-2"
+                                                       onclick="submit_bgImg(this)">提交</a>
+                                                </div>
+                                            </div>
+                                            <div class="space-24"></div>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
+<%- include ../component/common_footer.html -%>
 <script>
     function submit_bgImg(btn) {
-        var doctorName  = $("input[name='doctorName']").val();
-        var doctorSn    = $("input[name='doctorSn']").val();
-        var hospital    = $("select[name='hospital']").val();
-        var deptName    = $("input[name='deptName']").val();
-        var major       = $("input[name='major']").val();
-        var title       = $("input[name='title']").val();
-        var avatar      = $("input[name='pic_url']").val();
-        var doctor_id   = $("input[name='doctor_id']").val();
-        var gender      = $("select[name='gender']").val();
-        var description = $('#editor').html();//$("textarea[name='description']").val();
-        if (!doctorName) {
-            return bootbox.alert('请输入医生名称');
-        } else if (!doctorSn) {
-            return bootbox.alert('请输入医生编码');
+        var bgImgName = $("input[name='bgImgName']").val();
+        var bgPosition_id = $("select[name='bgPosition_id']").val().split(',')[0];
+        var bgPosationName = $("select[name='bgPosition_id']").val().split(',')[1];
+        var useStatus = $("input[name='useStatus']").val();
+        var imgUrl = $("input[name='imgUrl']").val();
+        var description = $('#description').val();
+        if (!bgImgName) {
+            return bootbox.alert('请输入背景图名称');
+        } else if (!bgPosition_id) {
+            return bootbox.alert('请选择背景图需要展示的位置');
+        } else if (!imgUrl) {
+            return bootbox.alert('请上传背景图片');
         }
-        else if (!deptName) {
-            return bootbox.alert('请填写科室名称');
-        } else if (!major) {
-            return bootbox.alert('请填写主治信息');
-        } else if (!title) {
-            return bootbox.alert('请填写职称信息');
-        } else if (!description) {
-            return bootbox.alert('请简单写几句介绍信息');
-        }
-        $.post('/manager/doctor/add', {
-            doctorName  : doctorName,
-            doctor_id   : doctor_id,
-            doctorSn    : doctorSn,
-            hospitalName: hospital.split(',')[1],
-            hospital_id : hospital.split(',')[0],
-            deptName    : deptName,
-            description : description,
-            major       : major,
-            title       : title,
-            avatar      : avatar,
-            gender      : gender
+        $.post('/management/bgImg/add', {
+            bgImgName: bgImgName,
+            bgPosition_id: bgPosition_id,
+            bgPosationName: bgPosationName,
+            useStatus: useStatus,
+            imgUrl: imgUrl,
+            description: description
         }, function (result) {
-            if (result.code == 200) {
-                return window.location.href = '/manager/doctor';
+            if (result.code === '200') {
+                return bootbox.alert('保存成功', function () {
+                    window.location.href = '/management/bgImg';
+                });
             } else {
                 return bootbox.alert(result.code + ":" + result.msg);
             }
@@ -182,21 +187,22 @@
 <script>
     function upload1(o) {
         var hideForm = $('#img_upload'), $file = $(o).clone();
-        var options  = {
-            dataType    : "json",
+        var options = {
+            dataType: "json",
             beforeSubmit: function () {
             },
-            success     : function (result) {
+            success: function (result) {
                 if (result.code === '200') {
                     $("#img_widget").removeClass('hidden');
-                    $("#image_url").val(result.data.file_path);
+                    $("#imgUrl").val(result.data.file_path);
                     $("#img_widget").attr('src', result.data.file_path);
                     $(o).attr('onchange', 'upload1(this,2)');
+                    bootbox.alert(result.msg + '');
                 } else {
                     bootbox.alert(result.msg + '');
                 }
             },
-            error       : function (result) {
+            error: function (result) {
                 bootbox.alert(result.msg + '');
             }
         };
@@ -204,3 +210,5 @@
         return !1;
     }
 </script>
+</body>
+</html>

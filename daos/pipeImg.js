@@ -1,5 +1,5 @@
 var pipeImgModel = require('../models').getModel('pipeImg');
-
+var indexDao = require('./index');
 var EventProxy = require('eventproxy').EventProxy;
 
 var moment = require('moment');
@@ -44,10 +44,7 @@ exports.removeAllById = function (pid , fn) {
 
 exports.addPipeImg = function (pipeImg , fn) {
     if (pipeImg) {
-        var instance = new pipeImgModel();
-        instance.save(function (err , data) {
-            fn(err , data);
-        });
+        indexDao.save(pipeImgModel, pipeImg, fn);
     } else {
         return fn('data is null');
     }
