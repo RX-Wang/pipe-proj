@@ -18,7 +18,7 @@ var generate_mongo_url = function (obj) {
 };
 module.exports = {
     db: generate_mongo_url(mongo),
-    port: 3001,
+    port: 3003,
     settings: {
         cookie_encrypt_secret   : 'pipe_wanTong',
         cookie_name             : 'wanTongGuanYe',
