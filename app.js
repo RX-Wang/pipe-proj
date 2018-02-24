@@ -26,9 +26,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next){
-  res.locals.pathView = getCurrentUrlTag(req.originalUrl);
-  res.locals.company_name = settings.company_name;
-  res.locals.company_full_name = settings.company_full_name;
+  res.locals.pathView           = getCurrentUrlTag(req.originalUrl);
+  res.locals.company_name       = settings.company_name;
+  res.locals.company_full_name  = settings.company_full_name;
+  res.locals.webRoot            = settings.webRoot;
   next();
 });
 app.use('/', index);

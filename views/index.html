@@ -62,7 +62,7 @@
     <div class="logo">
         <a href="index.html"></a>
     </div>
-    <div class="container main-container">
+    <div class="container main-container" style="max-width: 780px;">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -86,9 +86,9 @@
 <div class="image-slider">
     <!-- Slideshow 1 -->
     <ul class="rslides" id="slider1">
-        <li><img src="http://www2.ppdesk.com/file/20100120/desk/2014/03/03/xingxing2014_6_1920x1080.jpg" alt=""></li>
-        <li><img src="http://pic.xeeok.com/uploads/20171129/201711291500493873/55608_003_s1024.jpg" alt=""></li>
-        <li><img src="images/slider1.jpg" alt=""></li>
+        <%if(data && data.banners){for(var i = 0 , banners = data.banners; i < banners.length; i++){%>
+        <li><img src="<%= banners[i].imgUrl%>" alt=""></li>
+        <%}}%>
     </ul>
     <!-- Slideshow 2 -->
 </div>

@@ -96,6 +96,8 @@ body a:hover{
 }
 /*---top-nav----*/
 .top-nav{
+    max-width: 1280px;
+    margin: 0 auto;
 }
 .top-nav ul li{
 	display:inline-block;
@@ -1088,55 +1090,59 @@ body a:hover{
 		width:70% !important;
 	}
 	.we-do {
-    float: left;
-    width: 50%;
-    margin-bottom: 0.6em;
+        float: left;
+        width: 50%;
+        margin-bottom: 0.6em;
+    }
+    .holder.smooth {
+        float: left;
+        width: 25%;
+    }
+    .content {
+        margin: 4em 0em;
+    }
+    .big-button {
+        margin: 3em 0em 0em 0em;
+    }
+    .recent-places {
+        margin: 3em 0em 0em 0em;
+    }
+    .footer-grid {
+        float: left;
+        width: 50%;
+        margin-bottom: 2em;
+    }
+    .about-grid {
+        margin-bottom: 2em;
+    }
+    .go-top {
+        width: 95%;
+    }
+    .services h5 {
+        width: 71%;
+    }
+    .gallery-grids {
+        margin-bottom: 0em;
+    }
+    .gallery-grid {
+        margin-bottom: 2em;
+    }
+    .projects-bottom-paination {
+        padding-top: 30px;
+    }
+    .content {
+        margin: 3em 0em;
+    }
+    .contact-form {
+        padding-bottom: 0px;
+    }
+    .span_1_of_3 {
+        margin-bottom: 3em;
+    }
 }
-.holder.smooth {
-    float: left;
-    width: 25%;
-}
-.content {
-    margin: 4em 0em;
-}
-.big-button {
-    margin: 3em 0em 0em 0em;
-}
-.recent-places {
-    margin: 3em 0em 0em 0em;
-}
-.footer-grid {
-    float: left;
-    width: 50%;
-    margin-bottom: 2em;
-}
-.about-grid {
-    margin-bottom: 2em;
-}
-.go-top {
-    width: 95%;
-}
-.services h5 {
-    width: 71%;
-}
-.gallery-grids {
-    margin-bottom: 0em;
-}
-.gallery-grid {
-    margin-bottom: 2em;
-}
-.projects-bottom-paination {
-    padding-top: 30px;
-}
-.content {
-    margin: 3em 0em;
-}
-.contact-form {
-    padding-bottom: 0px;
-}
-.span_1_of_3 {
-    margin-bottom: 3em;
-}
+.image-slider{
+    max-width: 1280px;
+    margin: 0 auto;
 }
 @media(max-width:640px){
 .navbar-header {

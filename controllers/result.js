@@ -90,13 +90,19 @@ code_msg[Result.PARAMS_ERROR]       = '参数错误';
 Result.SERVER_ERROR                 = '10001';
 code_msg[Result.SERVER_ERROR]       = '操作失败';
 Result.BGNAME_DUPLICATED            = '10002';
-code_msg[Result.BGNAME_DUPLICATED]  = '背景图片名称重复';
-Result.BGIMG_SAVE_FAILED            = '10003';
-code_msg[Result.BGIMG_SAVE_FAILED]  = '背景图片保存';
+code_msg[Result.BGNAME_DUPLICATED]  = 'banner图片名称重复';
+Result.BANNERIMG_SAVE_FAILED            = '10003';
+code_msg[Result.BANNERIMG_SAVE_FAILED]  = 'banner图片保存失败';
 Result.USER_LOGIN_PASSWORD_ERROR    = '10004';
 code_msg[Result.USER_LOGIN_PASSWORD_ERROR] = '密码错误';
 Result.USER_NOT_EXIST               = '10005';
 code_msg[Result.USER_NOT_EXIST]     = '用户不存在';
+Result.DELETE_BANNER_FAILED         = '10006';
+code_msg[Result.DELETE_BANNER_FAILED]     = '删除banner图失败';
+Result.BANNERIMG_USESTATUS_UPDATE_FAILED         = '10007';
+code_msg[Result.BANNERIMG_USESTATUS_UPDATE_FAILED]     = '修改banner图启用状态失败';
+
+
 
 
 module.exports = Result;

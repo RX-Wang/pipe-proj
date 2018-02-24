@@ -7,40 +7,40 @@
 		<meta name="description" content="山东省烟台市招远市万通管业，汇丰商砼合作伙伴" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- basic styles -->
-		<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
-		<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+		<link href="<%=webRoot%>/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="<%=webRoot%>/assets/css/font-awesome.min.css" />
 
 		<!--[if IE 7]>
-		  <link rel="stylesheet" href="../assets/css/font-awesome-ie7.min.css" />
+		  <link rel="stylesheet" href="<%=webRoot%>/assets/css/font-awesome-ie7.min.css" />
 		<![endif]-->
 
 		<!-- page specific plugin styles -->
 
 		<!-- fonts -->
 
-		<link rel="stylesheet" href="../assets/css/googleapisFamilyOpenSans.css" />
+		<link rel="stylesheet" href="<%=webRoot%>/assets/css/googleapisFamilyOpenSans.css" />
 
 		<!-- ace styles -->
 
-		<link rel="stylesheet" href="../assets/css/ace.min.css" />
-		<link rel="stylesheet" href="../assets/css/ace-rtl.min.css" />
-		<link rel="stylesheet" href="../assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="<%=webRoot%>/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="<%=webRoot%>/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="<%=webRoot%>/assets/css/ace-skins.min.css" />
 
 		<!--[if lte IE 8]>
-		  <link rel="stylesheet" href="../assets/css/ace-ie.min.css" />
+		  <link rel="stylesheet" href="<%=webRoot%>/assets/css/ace-ie.min.css" />
 		<![endif]-->
 
 		<!-- inline styles related to this page -->
 
 		<!-- ace settings handler -->
 
-		<script src="../assets/js/ace-extra.min.js"></script>
+		<script src="<%=webRoot%>/assets/js/ace-extra.min.js"></script>
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
 		<!--[if lt IE 9]>
-		<script src="../assets/js/html5shiv.js"></script>
-		<script src="../assets/js/respond.min.js"></script>
+		<script src="<%=webRoot%>/assets/js/html5shiv.js"></script>
+		<script src="<%=webRoot%>/assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
 
@@ -55,14 +55,14 @@
 					<a href="#" class="navbar-brand">
 						<small>
 							<i class="icon-leaf"></i>
-							ACE后台管理系统
+							<%=company_name%>后台管理系统
 						</small>
 					</a><!-- /.brand -->
 				</div><!-- /.navbar-header -->
 
 				<div class="navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
-						<li class="grey">
+						<!--<li class="grey">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="icon-tasks"></i>
 								<span class="badge badge-grey">4</span>
@@ -213,7 +213,7 @@
 
 								<li>
 									<a href="#">
-										<img src="../assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
+										<img src="<%=webRoot%>/assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
 										<span class="msg-body">
 											<span class="msg-title">
 												<span class="blue">Alex:</span>
@@ -230,7 +230,7 @@
 
 								<li>
 									<a href="#">
-										<img src="../assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
+										<img src="<%=webRoot%>/assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
 										<span class="msg-body">
 											<span class="msg-title">
 												<span class="blue">Susan:</span>
@@ -247,7 +247,7 @@
 
 								<li>
 									<a href="#">
-										<img src="../assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
+										<img src="<%=webRoot%>/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
 										<span class="msg-body">
 											<span class="msg-title">
 												<span class="blue">Bob:</span>
@@ -269,14 +269,14 @@
 									</a>
 								</li>
 							</ul>
-						</li>
+						</li>-->
 
 						<li class="light-blue">
 							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-								<img class="nav-user-photo" src="../assets/avatars/user.jpg" alt="Jason's Photo" />
+								<img class="nav-user-photo" src="<%=webRoot%>/assets/avatars/user.jpg" alt="Jason's Photo" />
 								<span class="user-info">
-									<small>欢迎光临,</small>
-									Jason
+									<small>你好：</small>
+									<%= auth_user.nickname%>
 								</span>
 
 								<i class="icon-caret-down"></i>

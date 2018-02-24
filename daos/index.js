@@ -1,3 +1,4 @@
+var EventProxy = require('eventproxy').EventProxy;
 exports.save = function(model, params, cb) {
   var instance = new model(params);
   instance.save(cb);
@@ -51,7 +52,7 @@ exports.count = function (model , ops , fn) {
 };
 
 exports.saveOrUpdateByOpts = function (model , opts , values , fn) {
-  model.findOneAndUpdate(opts , values , { upsert: true , new: false } , fn);
+  model.update(opts , values , { upsert: true , new: false } , fn);
 };
 
 exports.list = function (model , ops , page , limit , sort , fn) {

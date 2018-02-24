@@ -42,6 +42,7 @@ exports.login = function (req , res) {
                 } , function (err , save_logs) {
                     console.log('存储日志:' + save_logs);
                 });
+                res.locals.auth_user = user;
                 return result.success(user , res);
             } else {
                 return result.failed(result.USER_LOGIN_PASSWORD_ERROR , res);
