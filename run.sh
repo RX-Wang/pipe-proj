@@ -4,7 +4,7 @@ PROJ_NAME="pipe-proj"
 cd ${PROJ_PATH}
 echo "pulling from github..."
 git pull
-mv ${PROJ_PATH}/config/index_prod.js ${PROJ_PATH}/config/index.js
+cp ${PROJ_PATH}/config/index_prod.js ${PROJ_PATH}/config/index.js
 if [ ! -d "${PROJ_PATH}/logs/" ];then
 mkdir ${PROJ_PATH}/logs/
 fi
