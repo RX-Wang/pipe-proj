@@ -2,8 +2,6 @@ var pipeImgModel = require('../models').getModel('pipeImg');
 var indexDao = require('./index');
 var EventProxy = require('eventproxy').EventProxy;
 
-var moment = require('moment');
-
 exports._list = function (ops , page , limit , sort , fn) {
     limit                  = limit || 20;
     page                   = page || 1;

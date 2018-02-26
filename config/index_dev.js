@@ -24,6 +24,6 @@ module.exports = {
         cookie_name             : 'wanTongGuanYe',
         company_name            : '万通管业',
         company_full_name       : '招远万通管业有限公司',
-        webRoot                 : 'http://localhost:3001' // 本地环境
+        webRoot                 : 'http://localhost:3003' // 本地环境
     }
 };

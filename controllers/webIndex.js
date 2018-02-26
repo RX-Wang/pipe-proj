@@ -34,4 +34,13 @@ WebIndexController.renderIndex = function (req, res) {
             res.render('error-500', { error: err });
         });
 };
+
+/**
+ * 渲染产品中心
+ * @param req
+ * @param res
+ */
+WebIndexController.renderGallery = function (req, res) {
+    res.render('gallery01');
+};
 module.exports = WebIndexController;

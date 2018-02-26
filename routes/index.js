@@ -6,4 +6,7 @@ var WebIndexController = require('../controllers/webIndex');
 /* 渲染--网站主页 */
 router.get('/', WebIndexController.renderIndex);
 
+/* 渲染--产品中心 */
+router.get('/gallery', WebIndexController.renderGallery);
+
 module.exports = router;

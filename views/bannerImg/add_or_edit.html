@@ -110,13 +110,12 @@
                                                     <img id="img_widget" src="<%=data.imgUrl || ''%>" style="margin: 20px 14px;max-width:260px;" class="<%if(!data._id){%> hidden <%}%>"/><br>
                                                 </div>
                                             </form>
-                                            <div class="form-group">
+                                            <div class="form-group" <%=data.editType === 'detail' ? 'hidden' : ''%> >
                                                 <div class="col-sm-3"></div>
                                                 <div class="col-sm-9 ">
                                                     <a class="btn btn-success col-xs-10 col-sm-2" onclick="submit_bannerImg(this)">提交</a>
                                                 </div>
                                             </div>
-                                            <div class="space-24"></div>
                                             <hr>
                                         </div>
                                     </div>
