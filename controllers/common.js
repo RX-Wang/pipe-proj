@@ -14,15 +14,16 @@ exports.setCookie = setCookie;
 
 exports.upload_file = function(req, res, cb) {
   try {
-    // multer 方式上传--START   需要现在 router中进行处理
+    // multer 方式上传--START   需要先在 router中进行处理
     var temp_path = req.file.path;
+    var _originalName = req.file.originalname;
     var ext = '.' + req.file.originalname.split('.')[1];
     var target_path = req.file.path + ext;
     var _filename = req.file.filename + ext;
     var filePath = '/upload/' + _filename;
     console.log("Uploading: " + _filename);
     fs.rename(temp_path, target_path, function(err,data) {
-      cb(null, { file_path: filePath });
+      cb(null, { file_path: filePath, _originalName: _originalName });
     });
     // multer 方式上传--END
   } catch (e) {

@@ -10,6 +10,7 @@ exports.schema = new Schema({
     // bgPosationName : String, // 位置名称
     useStatus      : String, //使用状态 0：禁用；1:启用
     imgUrl         : String, //图片链接  图片比例：1280 * 400
+    imgName        : String, // 图片名称
     description    : String, // 图片描述
     created_at     : {type: Date , default: Date.now}, //创建时间
     updated_at     : {type: Date , default: null}, //更新时间

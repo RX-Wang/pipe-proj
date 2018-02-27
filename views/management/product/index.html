@@ -1,0 +1,233 @@
+<%- include ../../component/common_header.html -%>
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+				<%- include ../../component/side-bar.html -%>
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								<a href="/management">首页</a>
+							</li>
+							<li class="active">产品管理</li>
+						</ul><!-- .breadcrumb -->
+
+			<!-- #nav- 搜索框  START -->
+						 <div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div>
+			<!-- #nav- 搜索框  END -->
+
+
+					</div>
+
+					<div class="page-content">
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+<!-- jQuery 数据表格 START-->
+								<div class="row">
+									<div class="col-xs-12">
+										<!-- <h3 class="header smaller lighter blue">背景图片列表</h3> -->
+										<a style="margin: 13px 10px 16px 0;" href="/management/product_add-or-edit-bannerImg/add" class="btn btn-success" id="addImg" title="Right Success">添加</a>
+										<div class="table-header">
+												产品图列表
+										</div>
+										<div class="table-responsive">
+											<table id="sample-table-2" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+														<th class="center">
+															<!--<label>
+																<input type="checkbox" class="ace" />
+																<span class="lbl"></span>
+															</label>-->
+															序号
+														</th>
+														<th>产品图片</th>
+														<th>产品名称</th>
+														<th class="hidden-480">启用状态</th>
+														<th>
+															<i class="icon-time bigger-110 hidden-480"></i>
+															上传时间
+														</th>
+														<th class="hidden-480">描述</th>
+														<th>操作</th>
+													</tr>
+												</thead>
+												<tbody>
+                                                <% if(data && data.items && data.items.length) {for(var i = 0, items = data.items ; i < items.length; i++) {%>
+                                                <tr>
+                                                    <td class="center">
+                                                        <!--<label>
+                                                            <input type="checkbox" class="ace" />
+                                                            <span class="lbl"></span>
+                                                        </label>-->
+                                                        <%= i + 1%>
+                                                    </td>
+
+                                                    <td>
+                                                        <img style="width: 220px; height: 110px;" src="<%=items[i].imgUrl%>">
+                                                    </td>
+                                                    <td> <%=items[i].productImgName%> </td>
+                                                    <td class="hidden-480">
+                                                        <div class="col-xs-3">
+                                                            <label>
+                                                                <input name="switch-field-1" onclick="change_bannerStatus(event, '<%= items[i]._id%>');"
+                                                                       value="<%= items[i].useStatus%>" class="ace ace-switch ace-switch-6" <%=items[i].useStatus === '1' ? 'checked' : ''%> type="checkbox" />
+                                                                <span class="lbl"></span>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td> <%=items[i].created_at%> </td>
+
+                                                    <td class="hidden-480">
+                                                        <%=items[i].description%>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                                            <a class="blue" href="/management/product_add-or-edit-bannerImg/detail?_bi=<%= items[i]._id%>" title="查看详情">
+                                                                <i class="icon-zoom-in bigger-130"></i>
+                                                            </a>
+
+                                                            <a class="green" href="/management/product_add-or-edit-bannerImg/edit?_bi=<%= items[i]._id%>" title="修改">
+                                                                <i class="icon-pencil bigger-130"></i>
+                                                            </a>
+
+                                                            <a class="red" href="javascript:" onclick="delete_banner(event, '<%= items[i]._id%>');" title="删除">
+                                                                <i class="icon-trash bigger-130"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <%}} else {%>
+                                                <tr><td colspan="7" style="text-align: center">暂无数据</td></tr>
+                                                <%}%>
+												</tbody>
+											</table>
+<!-- 分页符  START-->
+                                            <div style="text-align: right;">
+                                                <ul class="pagination">
+                                                    <%if(data.page_info && data.page_info.count > 0){
+                                                        var page_info = data.page_info;
+                                                        var pre = 0,next = 0;
+                                                        pre = (page_info.current_page - 1) > 0 ? (page_info.current_page - 1) : 1;
+                                                        next = (page_info.current_page * 1 + 1) > page_info.page_size ? page_info.page_size:(page_info.current_page * 1 + 1);
+                                                    %>
+                                                    <li>
+                                                        <a href="?page=<%=pre%>" id="pre" aria-label="Previous">
+                                                            <span aria-hidden="true">&laquo;</span>
+                                                        </a>
+                                                    </li>
+                                                    <%var add = true;
+                                                    for(var i = 1; i<= page_info.count; i++){
+                                                        if(i > 3 && (page_info.count - i) >= 3 && Math.abs(page_info.current_page - i) >1){
+                                                            if(add){%>
+                                                    <li><a href="#"> ... </a></li>
+                                                    <%
+                                                                add = false;
+                                                            }
+                                                        continue;
+                                                    }
+                                                    if(Math.abs(page_info.current_page - i) == 1){add = true;}
+                                                    %>
+                                                    <%if(page_info.current_page == i){%>
+                                                    <li class="active"><a class="num" href="?page=<%=i%>"><%=i%></a>
+                                                    </li>
+                                                    <%}else{%>
+                                                    <li><a class="num" href="?page=<%=i%>"><%=i%></a></li>
+                                                    <%}}%>
+                                                    <li>
+                                                        <a href="?page=<%=next%>" id="next"
+                                                           aria-label="Next">
+                                                            <span aria-hidden="true">&raquo;</span>
+                                                        </a>
+                                                    </li>
+                                                    <%}%>
+                                                </ul>
+                                            </div>
+<!-- 分页符  END-->
+										</div>
+									</div>
+								</div>
+<!-- jQuery 数据表格 END-->
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="ace-settings-container" id="ace-settings-container">
+					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+						<i class="icon-cog bigger-150"></i>
+					</div>
+					<%- include ../../component/setting-skin.html -%>
+				</div>
+			</div>
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div>
+		<%- include ../../component/common_footer.html -%>
+
+		<script type="text/javascript">
+            /**
+             * 删除 产品
+             * @param e
+             * @param _id
+             */
+            function delete_banner(e, _id) {
+                e.preventDefault();
+                e.stopPropagation();
+                bootbox.confirm('确定要删除吗?', function (result) {
+                    if(result) {
+                        $.post('/management/delete_product',
+                            { _id: _id},
+                            function (result) {
+                            if(result.code === '200') {
+                                bootbox.alert('删除成功', function () {
+                                    location.reload();
+                                })
+                            } else {
+                                bootbox.alert(result.msg);
+                            }
+                        });
+                    }
+                })
+            }
+
+            /**
+             * 修改产品 图的启用状态
+             * @param e
+             * @param _id
+             */
+            function change_bannerStatus(e, _id) {
+                var useStatus = $(e.target).val();
+                $.post('/management/change_productStatus', { _id: _id, useStatus: ~~!+useStatus }, function (result) {
+                   if(result.code === '200') {
+                        $(e.target).val(~~!+useStatus);
+                   } else {
+                       bootbox.alert(result.msg);
+                   }
+                });
+            }
+		</script>
+	
+</body>
+</html>

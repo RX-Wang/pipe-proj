@@ -53,32 +53,6 @@ exports.login = function (req , res) {
     }).catch(function (err) {
         return result.failed(result.SERVER_ERROR, res);
     });
-    /*daos.findOneByOps(ops , function (err , user) {
-        if (user) {
-            console.log(user);
-            if (user.password === utils.md5(password)) {
-                var data = {
-                    id       : user._id ,
-                    nickname : user.nickname,
-                    name     : user.name ,
-                    time     : Date.now()
-                };
-                common.setCookie(data , res);
-                daos.save(logModel , {
-                    name      : data.name ,
-                    manager_id: data.id ,
-                    content   : '登陆系统[IP:' + utils.getClientIp(req) + ']'
-                } , function (err , save_logs) {
-                    console.log('存储日志:' + save_logs);
-                });
-                return result.success(user , res);
-            } else {
-                return result.failed(result.USER_LOGIN_PASSWORD_ERROR , res);
-            }
-        } else {
-            return result.failed(result.USER_NOT_EXIST , res);
-        }
-    });*/
 };
 
 /**

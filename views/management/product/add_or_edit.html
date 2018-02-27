@@ -1,4 +1,4 @@
-<%- include ../component/common_header.html -%>
+<%- include ../../component/common_header.html -%>
 <div class="main-container" id="main-container">
     <script type="text/javascript">
         try {
@@ -11,7 +11,7 @@
         <a class="menu-toggler" id="menu-toggler" href="#">
             <span class="menu-text"></span>
         </a>
-        <%- include ../component/side-bar.html -%>
+        <%- include ../../component/side-bar.html -%>
         <div class="main-content">
             <div class="breadcrumbs" id="breadcrumbs">
                 <script type="text/javascript">
@@ -27,15 +27,15 @@
                         <a href="/management">首页</a>
                     </li>
                     <li class="active">
-                        <a href="/management/bannerImg">banner图管理</a>
+                        <a href="/management/product">产品管理</a>
                     </li>
                     <li class="active">
                         <%if(data.editType === 'add'){%>
-                        新增banner图
+                        新增产品
                         <%} else if (data.editType === 'edit') {%>
-                        修改banner图
+                        修改产品
                         <%} else {%>
-                        查看banner图
+                        查看产品
                         <%}%>
                     </li>
                 </ul>
@@ -49,11 +49,11 @@
                                     <div class="widget-header">
                                         <h4 class="smaller">
                                             <%if(data.editType === 'add'){%>
-                                            新增banner图
+                                            新增产品
                                             <%} else if (data.editType === 'edit') {%>
-                                            修改banner图
+                                            修改产品
                                             <%} else {%>
-                                            查看banner图
+                                            查看产品
                                             <%}%>
                                         </h4>
                                     </div>
@@ -61,26 +61,23 @@
                                         <div class="widget-main">
                                             <form class="form-horizontal" role="form">
                                                 <div class="form-group">
-                                                    <label class="col-sm-3 control-label no-padding-right"
-                                                           for="bannerImgName"> banner图名称 </label>
+                                                    <label class="col-sm-3 control-label no-padding-right" for="productName"> 产品名称 </label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" id="bannerImgName" placeholder="背景图名称"
-                                                               name="bannerImgName" value="<%=data.bannerImgName || ''%>"
-                                                               class="col-xs-10 col-sm-5"/>
+                                                        <input type="text" id="productName" placeholder="请输入产品名称" name="productName" value="<%=data.productName || ''%>" class="col-xs-10 col-sm-5"/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="col-sm-3 control-label no-padding-right"> 使用状态 </label>
+                                                    <label class="col-sm-3 control-label no-padding-right"> 展示状态 </label>
                                                     <div class="col-sm-9">
                                                       <span class="radio" style="display:inline">
                                                         <label>
-                                                          <input name="useStatus" value="1" type="radio" class="ace" <%= data.useStatus === '1' ? 'checked' : ''%> />
+                                                          <input name="showStatus" value="1" type="radio" class="ace" <%= data.showStatus === '1' ? 'checked' : ''%> />
                                                           <span class="lbl">启用</span>
                                                         </label>
                                                       </span>
                                                         <span class="radio" style="display:inline">
                                                         <label>
-                                                          <input name="useStatus" value="0" type="radio" class="ace" <%= data.useStatus === '0' ? 'checked' : ''%> />
+                                                          <input name="showStatus" value="0" type="radio" class="ace" <%= data.showStatus === '0' ? 'checked' : ''%> />
                                                           <span class="lbl">禁用</span>
                                                         </label>
                                                       </span>
@@ -88,35 +85,53 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label no-padding-right"
-                                                           for="description">banner图描述 </label>
+                                                           for="form-field-2"> 首位展示 </label>
+                                                    <div class="col-sm-9">
+                                                        <select class="col-xs-10 col-sm-5" id="form-field-2" name="bgPosition_id">
+                                                            <option value="0">--选择首位展示的图片--</option>
+                                                            <%
+                                                                if(data.productImgs && Object.keys(data.productImgs).length > 0){
+                                                                    var prodImg;
+                                                                    for(var key in data.productImgs){
+                                                                        prodImg = data.productImgs[key];
+                                                            %>
+                                                            <option value="<%= prodImg.imgPath %>,<%= prodImg.imgName %>,<%= prodImg.imgOriginalName %>" <%= data.indexImg && data.indexImg.imgName ===  key ? 'selected' : '' %> >
+                                                            <%=prodImg.imgOriginalName%>
+                                                            </option>
+                                                            <%
+                                                                    }
+                                                                }
+                                                            %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label no-padding-right"
+                                                           for="description">产品描述 </label>
                                                     <div class="col-sm-9">
                                                         <textarea id="description" class="wysiwyg-editor  col-sm-5" style="border: 1px solid #BBC0CA"><%=data.description || ''%> </textarea>
                                                         <!--</form>-->
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label no-padding-right"
-                                                           for="bannerImgName"> banner图原文件名 </label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" disabled id="imgName" name="imgName" value="<%=data.imgName || ''%>" class="col-xs-10 col-sm-5"/>
-                                                    </div>
-                                                </div>
-                                                <!-- 背景图片ID -->
-                                                <input type="hidden" name="bannerImg_id" value="<%=data._id || ''%>">
-                                                <input id="imgUrl" type="hidden" name="imgUrl"
-                                                       value="<%=data.imgUrl || ''%>">
+                                                <input type="hidden" name="product_id" value="<%=data._id || ''%>">
+                                                <input id="imgUrl" type="hidden" name="imgUrl" value="<%=data.imgUrl || ''%>">
                                             </form>
-                                            <form id="img_upload" method="post" enctype="multipart/form-data"
-                                                  class="form-horizontal" role="form" action="/management/upload_bannerImg">
-                                                <div class="form-group">
-                                                    <label class="col-sm-3 control-label no-padding-right"> banner图 </label>
-                                                    <div class="col-sm-9">
-                                                        <input id="file_select" class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this);">
-                                                        <i class="red">( 图片尺寸：1280 * 400 )</i>
+                                            <button  onclick="addNewProductImg(event);" class="btn btn-sm btn-info" style="transform: translateX(50%);left: 50%;">添加样品图</button>
+                                            <div id="product_imgs">
+                                                <form id="img_upload_1" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" action="/management/upload_bannerImg">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label no-padding-right"> 产品样品图1 </label>
+                                                        <div class="col-sm-9">
+                                                            <input class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this, 1);">
+                                                            <i class="red">( 图片尺寸：1280 * 400 )</i>
+                                                            <a class="red" href="javascript:" onclick="" title="删除该图片" style="margin-left: 20px;">
+                                                                <i class="icon-trash bigger-130"></i>
+                                                            </a>
+                                                        </div>
+                                                        <img id="img_widget_1" src="<%=data.imgUrl || (webRoot)+ '/images/upload-bg.png'%>" style="margin: 20px 14px;max-width:260px;"/><br>
                                                     </div>
-                                                    <img id="img_widget" src="<%=data.imgUrl || ''%>" style="margin: 20px 14px;max-width:260px;" class="<%if(!data._id){%> hidden <%}%>"/><br>
-                                                </div>
-                                            </form>
+                                                </form>
+                                            </div>
                                             <div class="form-group" <%=data.editType === 'detail' ? 'hidden' : ''%> >
                                                 <div class="col-sm-3"></div>
                                                 <div class="col-sm-9 ">
@@ -135,13 +150,12 @@
         </div>
     </div>
 </div>
-<%- include ../component/common_footer.html -%>
+<%- include ../../component/common_footer.html -%>
 <script>
     function submit_bannerImg(btn) {
         var bannerImgName   = $("input[name='bannerImgName']").val();
         var useStatus       = $("input[name='useStatus']:checked").val();
         var imgUrl          = $("input[name='imgUrl']").val();
-        var imgName         = $("#img_widget").attr('imgName');
         var description     = $('#description').val();
         var editType        = '<%= data.editType%>';
         var _id             = '<%=data._id%>';
@@ -156,7 +170,6 @@
             bannerImgName   : bannerImgName,
             useStatus       : useStatus,
             imgUrl          : imgUrl,
-            imgName         : imgName,
             description     : description,
             editType        : editType,
             _id             : _id
@@ -170,24 +183,44 @@
             }
         }, 'json');
     }
+
+    /**
+     * 添加新的 样品图
+     * @param e
+     */
+    function addNewProductImg(e) {
+        var imgIndex = $('#product_imgs').find('form').length + 1;
+        $('#product_imgs').append(
+            '<form id="img_upload_'+ imgIndex +'" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" action="/management/upload_bannerImg">'+
+            '   <div class="form-group">'+
+            '       <label class="col-sm-3 control-label no-padding-right"> 产品样品图' + imgIndex + ' </label>'+
+            '       <div class="col-sm-9">'+
+            '           <input class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this, ' + imgIndex + ');">'+
+            '           <i class="red">( 图片尺寸：1280 * 400 )</i>'+
+            '           <a class="red" href="javascript:" onclick="" title="删除该图片" style="margin-left: 20px;">'+
+            '               <i class="icon-trash bigger-130"></i>'+
+            '           </a>'+
+            '       </div>'+
+            '       <img id="img_widget_' + imgIndex + '" src="<%=webRoot%>/images/upload-bg.png" style="margin: 20px 14px;max-width:260px;"/><br>'+
+            '   </div>'+
+            '</form>'
+        );
+    }
 </script>
 <script src="//cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.js"></script>
 <script>
-    function upload1(o) {
-        var hideForm = $('#img_upload'), $file = $(o).clone();
+    function upload1(o, imgIndex) {
+        var hideForm = $('#img_upload_' + imgIndex), $file = $(o).clone();
         var options = {
             dataType: "json",
             beforeSubmit: function () {
             },
             success: function (result) {
                 if (result.code === '200') {
-                    $("#img_widget").removeClass('hidden');
                     $("#imgUrl").val(result.data.file_path);
-                    $("#img_widget").attr('src', result.data.file_path);
-                    $("#img_widget").attr('imgName', result.data._originalName);
-                    $('#imgName').val(result.data._originalName);
-                    $(o).attr('onchange', 'upload1(this,2)');
+                    $("#img_widget_" + imgIndex).attr('src', result.data.file_path);
+                    // TODO 这里需要在上传成功以后，将图片信息存储起来，便于最后提交
                 } else {
                     bootbox.alert(result.msg + '');
                 }

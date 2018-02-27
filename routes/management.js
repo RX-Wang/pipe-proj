@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 var common = require('../controllers/common');
 
-var PipeImgController = require('../controllers/pipeImg');
+var BannerImgController = require('../controllers/bannerImg');
 var ManagerController = require('../controllers/manager');
+var ProductController = require('../controllers/product');
 
 var path = require('path');
 // 文件上传组件
@@ -16,37 +17,37 @@ router.get('/', common.auth_user, function(req, res, next) {
   res.render('management/index');
 });
 
-/**
- *  管理后台--banner 相关 ---- START
- */
+                /**
+                 *  管理后台--banner 相关 ---- START
+                 */
 
 /* 管理后台--banner图片管理首页 */
-router.get('/bannerImg', common.auth_user, PipeImgController.renderIndex);
+router.get('/bannerImg', common.auth_user, BannerImgController.renderIndex);
 
 /* 管理后台--banner图片管理 添加、编辑、详情页 */
-router.get('/bannerImg_add-or-edit-bannerImg/:type', common.auth_user, PipeImgController.renderAddEdit);
+router.get('/bannerImg_add-or-edit-bannerImg/:type', common.auth_user, BannerImgController.renderAddEdit);
 
 /* API--上传banner图片 */
 router.post('/upload_bannerImg', common.auth_user, upload.single('upload_file'), function(req, res) {
-  PipeImgController.upload_bannerImg(req, res);
+    BannerImgController.upload_bannerImg(req, res);
 });
 
 /* API--banner图片 添加 接口 */
-router.post('/bannerImg/add', common.auth_user, PipeImgController.addBannerImg);
+router.post('/bannerImg/add', common.auth_user, BannerImgController.addBannerImg);
 
 /* API--banner图片 删除 接口 */
-router.post('/delete_banner', common.auth_user, PipeImgController.deleteBannerImg);
+router.post('/delete_banner', common.auth_user, BannerImgController.deleteBannerImg);
 
 /* API--banner图片 启用状态 修改接口 */
-router.post('/change_bannerStatus', common.auth_user, PipeImgController.change_bannerStatus);
+router.post('/change_bannerStatus', common.auth_user, BannerImgController.change_bannerStatus);
 
-/**
- *  管理后台--banner 相关 ---- END
- */
+                /**
+                 *  管理后台--banner 相关 ---- END
+                 */
 
-/**
- *  管理员 账号密码 相关 ---- START
- */
+                /**
+                 *  管理员 账号密码 相关 ---- START
+                 */
 
 /* 管理后台--管理员账户密码管理 */
 router.get('/wxqManager', common.auth_user, function(req, res) {
@@ -61,20 +62,23 @@ router.get('/toLogin', function(req, res) {
 /* API--登录 */
 router.post('/login', ManagerController.login);
 
-/**
- *  管理员 账号密码 相关 ---- END
- */
+                /**
+                 *  管理员 账号密码 相关 ---- END
+                 */
 
 
-/**
- *  管理后台--产品 相关 ---- START
- */
+                /**
+                 *  管理后台--产品 相关 ---- START
+                 */
+/* 管理后台--产品中心管理 首页*/
+router.get('/product', common.auth_user, ProductController.renderProduct);
 
+/* 管理后台--产品添加、编辑、详情页 */
+router.get('/product_add-or-edit-bannerImg/:type', common.auth_user, ProductController.renderAddEdit);
 
-
-/**
- *  管理后台--产品 相关 ---- END
- */
+                /**
+                 *  管理后台--产品 相关 ---- END
+                 */
 
 router.get('/typography', common.auth_user, function(req, res, next) {
   res.render('typography', {});

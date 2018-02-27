@@ -4,14 +4,14 @@ var result       = require("./result");
 var common       = require('./common');
 var bannerImgModel = require('../models').getModel('bannerImg');
 
-var PipeImgController = {};
+var BannerImgController = {};
 
 /**
  * 渲染banner图管理首页
  * @param req
  * @param res
  */
-PipeImgController.renderIndex = function (req, res) {
+BannerImgController.renderIndex = function (req, res) {
     var page = req.query.page || 1;
     var limit = req.query.limit || 10;
     var sort = req.query.sort || { created_at: -1 };
@@ -29,7 +29,7 @@ PipeImgController.renderIndex = function (req, res) {
  * @param req
  * @param res
  */
-PipeImgController.renderAddEdit = function (req, res) {
+BannerImgController.renderAddEdit = function (req, res) {
     var type = req.params.type;
     var id   = req.query._bi;
     var data = { editType: type };
@@ -53,7 +53,7 @@ PipeImgController.renderAddEdit = function (req, res) {
  * @param res
  * @returns {*}
  */
-PipeImgController.addBannerImg = function (req, res) {
+BannerImgController.addBannerImg = function (req, res) {
     var bannerImgName = req.body.bannerImgName || null;
     var useStatus     = req.body.useStatus || '1';
     var imgUrl        = req.body.imgUrl || null;
@@ -102,7 +102,7 @@ PipeImgController.addBannerImg = function (req, res) {
  * @param req
  * @param res
  */
-PipeImgController.deleteBannerImg = function (req, res) {
+BannerImgController.deleteBannerImg = function (req, res) {
     var _id = req.body._id || '';
     if(!_id)
         return result.failed(result.PARAMS_ERROR, res);
@@ -120,7 +120,7 @@ PipeImgController.deleteBannerImg = function (req, res) {
  * @param req
  * @param res
  */
-PipeImgController.change_bannerStatus = function (req, res) {
+BannerImgController.change_bannerStatus = function (req, res) {
     var _id = req.body._id || '';
     var useStatus = req.body.useStatus || '';
     if(!_id || !useStatus)
@@ -133,9 +133,9 @@ PipeImgController.change_bannerStatus = function (req, res) {
 };
 
 // 上传banner图
-PipeImgController.upload_bannerImg = function(req, res) {
+BannerImgController.upload_bannerImg = function(req, res) {
     common.upload_file(req, res, function(err, data) {
         result.multiReturn('上传图片', err, data, res);
     });
 };
-module.exports = PipeImgController;
+module.exports = BannerImgController;

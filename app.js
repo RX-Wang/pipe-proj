@@ -30,6 +30,7 @@ app.use(function(req, res, next){
   res.locals.company_name       = settings.company_name;
   res.locals.company_full_name  = settings.company_full_name;
   res.locals.webRoot            = settings.webRoot;
+  res.locals.auth_user          = {};
   next();
 });
 app.use('/', index);
