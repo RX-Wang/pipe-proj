@@ -7,8 +7,8 @@ var Schema   = mongoose.Schema;
 exports.schema = new Schema({
     name                    : String , // 用户名
     password                : String , // 密码
+    nickname                : String , // 昵称
     temp_code               : String ,
-    nickname                : String ,
     phone                   : String ,//手机号,用于重置密码
     password_text           : String ,
     level                   : Number ,//级别

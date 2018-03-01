@@ -80,3 +80,13 @@ exports.logout = function (req , res) {
     res.cookie(settings.cookie_name , null , {maxAge: 0});
     res.redirect('/');
 };
+
+// API--我自己临时的添加管理员
+exports.wxq_addManager = function (req, res) {
+    var name = req.body.name || '';
+    var password = req.body.password || '';
+    var nickname = req.body.nickname || '';
+    daos.save(managerModel, { name: name, password: utils.md5(password), nickname: nickname}, function (err, data) {
+        result.multiReturn('王先生添加管理员', err, data, res);
+    })
+};

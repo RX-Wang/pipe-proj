@@ -46,13 +46,22 @@ router.post('/change_bannerStatus', common.auth_user, BannerImgController.change
                  */
 
                 /**
-                 *  管理员 账号密码 相关 ---- START
+                 *  ============>  管理员 账号密码 相关 ---- START
                  */
 
 /* 管理后台--管理员账户密码管理 */
-router.get('/wxqManager', common.auth_user, function(req, res) {
-    res.render('userManager', {});
+router.get('/toAddManager', function (req, res) {
+   res.render('userManager');
 });
+
+// 我自己的临时添加管理员的页面
+router.get('/wxqManager', function(req, res) {
+    res.render('userManager/wxq_addManager');
+});
+
+// API--我自己临时的添加管理员
+router.post('/wxq_addManager', ManagerController.wxq_addManager);
+
 
 /* 管理后台--登录页面 */
 router.get('/toLogin', function(req, res) {

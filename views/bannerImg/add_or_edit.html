@@ -64,7 +64,7 @@
                                                     <label class="col-sm-3 control-label no-padding-right"
                                                            for="bannerImgName"> banner图名称 </label>
                                                     <div class="col-sm-9">
-                                                        <input type="text" id="bannerImgName" placeholder="背景图名称"
+                                                        <input type="text" id="bannerImgName" placeholder="banner图名称"
                                                                name="bannerImgName" value="<%=data.bannerImgName || ''%>"
                                                                class="col-xs-10 col-sm-5"/>
                                                     </div>
@@ -101,7 +101,7 @@
                                                         <input type="text" disabled id="imgName" name="imgName" value="<%=data.imgName || ''%>" class="col-xs-10 col-sm-5"/>
                                                     </div>
                                                 </div>
-                                                <!-- 背景图片ID -->
+                                                <!-- banner图片ID -->
                                                 <input type="hidden" name="bannerImg_id" value="<%=data._id || ''%>">
                                                 <input id="imgUrl" type="hidden" name="imgUrl"
                                                        value="<%=data.imgUrl || ''%>">
@@ -111,7 +111,7 @@
                                                 <div class="form-group">
                                                     <label class="col-sm-3 control-label no-padding-right"> banner图 </label>
                                                     <div class="col-sm-9">
-                                                        <input id="file_select" class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this);">
+                                                        <input id="file_select" class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload(this);">
                                                         <i class="red">( 图片尺寸：1280 * 400 )</i>
                                                     </div>
                                                     <img id="img_widget" src="<%=data.imgUrl || ''%>" style="margin: 20px 14px;max-width:260px;" class="<%if(!data._id){%> hidden <%}%>"/><br>
@@ -136,58 +136,69 @@
     </div>
 </div>
 <%- include ../component/common_footer.html -%>
-<script>
-    function submit_bannerImg(btn) {
-        var bannerImgName   = $("input[name='bannerImgName']").val();
-        var useStatus       = $("input[name='useStatus']:checked").val();
-        var imgUrl          = $("input[name='imgUrl']").val();
-        var imgName         = $("#img_widget").attr('imgName');
-        var description     = $('#description').val();
-        var editType        = '<%= data.editType%>';
-        var _id             = '<%=data._id%>';
-        if (!bannerImgName) {
-            return bootbox.alert('请输入背景图名称');
-        } else if(!useStatus) {
-            return bootbox.alert('请选择启用状态');
-        } else if (!imgUrl) {
-            return bootbox.alert('请上传背景图片');
-        }
-        $.post('/management/bannerImg/add', {
-            bannerImgName   : bannerImgName,
-            useStatus       : useStatus,
-            imgUrl          : imgUrl,
-            imgName         : imgName,
-            description     : description,
-            editType        : editType,
-            _id             : _id
-        }, function (result) {
-            if (result.code === '200') {
-                return bootbox.alert('保存成功', function () {
-                    window.location.href = '/management/bannerImg';
-                });
-            } else {
-                return bootbox.alert(result.code + ":" + result.msg);
-            }
-        }, 'json');
-    }
-</script>
-<script src="//cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.js"></script>
 <script>
-    function upload1(o) {
-        var hideForm = $('#img_upload'), $file = $(o).clone();
+    // 先上传文件到本地，并预览
+    function upload(o) {
+        $("#img_widget").removeClass('hidden');
+        $('#imgName').val($('#file_select')[0].files[0].name);
+        var file = $('#file_select')[0].files[0];
+        if(window.FileReader) {
+            var fr = new FileReader();
+            fr.onloadend = function(e) {
+                document.getElementById("img_widget").src = e.target.result;
+            };
+            fr.readAsDataURL(file);
+        }
+    }
+    function submit_bannerImg(btn) {
+        /**
+         *  先上传图片
+         */
+        var hideForm = $('#img_upload');
         var options = {
             dataType: "json",
             beforeSubmit: function () {
             },
             success: function (result) {
                 if (result.code === '200') {
-                    $("#img_widget").removeClass('hidden');
                     $("#imgUrl").val(result.data.file_path);
-                    $("#img_widget").attr('src', result.data.file_path);
                     $("#img_widget").attr('imgName', result.data._originalName);
                     $('#imgName').val(result.data._originalName);
-                    $(o).attr('onchange', 'upload1(this,2)');
+                    /**
+                     * 再 提交表单
+                     */
+                    var bannerImgName   = $("input[name='bannerImgName']").val();
+                    var useStatus       = $("input[name='useStatus']:checked").val();
+                    var imgUrl          = $("input[name='imgUrl']").val();
+                    var imgName         = $("#img_widget").attr('imgName');
+                    var description     = $('#description').val();
+                    var editType        = '<%= data.editType%>';
+                    var _id             = '<%=data._id%>';
+                    if (!bannerImgName) {
+                        return bootbox.alert('请输入banner图名称');
+                    } else if(!useStatus) {
+                        return bootbox.alert('请选择启用状态');
+                    } else if (!imgUrl) {
+                        return bootbox.alert('请上传banner图片');
+                    }
+                    $.post('/management/bannerImg/add', {
+                        bannerImgName   : bannerImgName,
+                        useStatus       : useStatus,
+                        imgUrl          : imgUrl,
+                        imgName         : imgName,
+                        description     : description,
+                        editType        : editType,
+                        _id             : _id
+                    }, function (result) {
+                        if (result.code === '200') {
+                            return bootbox.alert('保存成功', function () {
+                                window.location.href = '/management/bannerImg';
+                            });
+                        } else {
+                            return bootbox.alert(result.code + ":" + result.msg);
+                        }
+                    }, 'json');
                 } else {
                     bootbox.alert(result.msg + '');
                 }
@@ -197,7 +208,6 @@
             }
         };
         hideForm.ajaxSubmit(options);
-        return !1;
     }
 </script>
 </body>

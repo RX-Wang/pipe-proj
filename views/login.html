@@ -289,6 +289,8 @@
                 $('#' + id).css('display', 'block').addClass('visible');
             }
             function login(e) {
+			    e.preventDefault();
+			    e.stopPropagation();
                 var username = $('#username').val();
                 var password = $('#password').val();
 			    $.post('/management/login', {
@@ -306,6 +308,10 @@
                     }
                 });
             }
+            document.onkeydown = function (e) {
+			    if(e.keyCode === 13)
+			        login(e);
+            };
 		</script>
 	
 </body>
