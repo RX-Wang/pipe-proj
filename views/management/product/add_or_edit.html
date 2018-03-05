@@ -116,19 +116,36 @@
                                                 <input type="hidden" name="product_id" value="<%=data._id || ''%>">
                                                 <input id="imgUrl" type="hidden" name="imgUrl" value="<%=data.imgUrl || ''%>">
                                             </form>
-                                            <button  onclick="addNewProductImg(event);" class="btn btn-sm btn-info" style="transform: translateX(50%);left: 50%;">添加样品图</button>
+                                            <button  onclick="addNewProductImg(event, '<%= webRoot%>');" class="btn btn-sm btn-info" style="transform: translateX(50%);left: 50%;">添加样品图</button>
                                             <div id="product_imgs">
                                                 <form id="img_upload_1" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" action="/management/upload_bannerImg">
                                                     <div class="form-group">
-                                                        <label class="col-sm-3 control-label no-padding-right"> 产品样品图1 </label>
+                                                        <label class="col-sm-3 control-label no-padding-right"> 产品样品图</label>
                                                         <div class="col-sm-9">
-                                                            <input class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this, 1);">
+                                                            <input class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload(event, 1);">
                                                             <i class="red">( 图片尺寸：1280 * 400 )</i>
-                                                            <a class="red" href="javascript:" onclick="" title="删除该图片" style="margin-left: 20px;">
+                                                            <a class="red" href="javascript:$('#img_upload_1').remove();" title="删除该图片" style="margin-left: 20px;">
                                                                 <i class="icon-trash bigger-130"></i>
                                                             </a>
                                                         </div>
-                                                        <img id="img_widget_1" src="<%=data.imgUrl || (webRoot)+ '/images/upload-bg.png'%>" style="margin: 20px 14px;max-width:260px;"/><br>
+                                                        <img id="img_widget_1" src="<%=data.imgUrl || (webRoot)+ '/images/upload-bg.png'%>" style="margin: 20px 14px;max-width:260px;"/>
+                                                        <label>名称：</label>
+                                                        <input type="text" disabled id="imgName_1"/>
+                                                        <label>使用状态：
+                                                            <span class="radio" style="display:inline">
+                                                            <label>
+                                                              <input name="showStatus" value="1" type="radio" class="ace" checked/>
+                                                              <span class="lbl">启用</span>
+                                                            </label>
+                                                        </span>
+                                                            <span class="radio" style="display:inline">
+                                                            <label>
+                                                              <input name="showStatus" value="0" type="radio" class="ace"/>
+                                                              <span class="lbl">禁用</span>
+                                                            </label>
+                                                        </span>
+                                                        </label>
+                                                        <br>
                                                     </div>
                                                 </form>
                                             </div>
@@ -151,6 +168,7 @@
     </div>
 </div>
 <%- include ../../component/common_footer.html -%>
+<script src="<%=webRoot%>/javascripts/product.js"></script>
 <script>
     function submit_bannerImg(btn) {
         var bannerImgName   = $("input[name='bannerImgName']").val();
@@ -184,32 +202,7 @@
         }, 'json');
     }
 
-    /**
-     * 添加新的 样品图
-     * @param e
-     */
-    function addNewProductImg(e) {
-        var imgIndex = $('#product_imgs').find('form').length + 1;
-        $('#product_imgs').append(
-            '<form id="img_upload_'+ imgIndex +'" method="post" enctype="multipart/form-data" class="form-horizontal" role="form" action="/management/upload_bannerImg">'+
-            '   <div class="form-group">'+
-            '       <label class="col-sm-3 control-label no-padding-right"> 产品样品图' + imgIndex + ' </label>'+
-            '       <div class="col-sm-9">'+
-            '           <input class="col-xs-5 col-sm-2" type="file" name="upload_file" accept="image/gif,image/x-png,image/jpeg" onchange="upload1(this, ' + imgIndex + ');">'+
-            '           <i class="red">( 图片尺寸：1280 * 400 )</i>'+
-            '           <a class="red" href="javascript:" onclick="" title="删除该图片" style="margin-left: 20px;">'+
-            '               <i class="icon-trash bigger-130"></i>'+
-            '           </a>'+
-            '       </div>'+
-            '       <img id="img_widget_' + imgIndex + '" src="<%=webRoot%>/images/upload-bg.png" style="margin: 20px 14px;max-width:260px;"/><br>'+
-            '   </div>'+
-            '</form>'
-        );
-    }
-</script>
-<script src="//cdn.bootcss.com/jquery/2.1.2/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.js"></script>
-<script>
+
     function upload1(o, imgIndex) {
         var hideForm = $('#img_upload_' + imgIndex), $file = $(o).clone();
         var options = {

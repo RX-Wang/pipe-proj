@@ -136,7 +136,6 @@
     </div>
 </div>
 <%- include ../component/common_footer.html -%>
-<script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.js"></script>
 <script>
     // 先上传文件到本地，并预览
     function upload(o) {
@@ -152,14 +151,9 @@
         }
     }
     function submit_bannerImg(btn) {
-        /**
-         *  先上传图片
-         */
         var hideForm = $('#img_upload');
         var options = {
             dataType: "json",
-            beforeSubmit: function () {
-            },
             success: function (result) {
                 if (result.code === '200') {
                     $("#imgUrl").val(result.data.file_path);
@@ -207,7 +201,29 @@
                 bootbox.alert(result.msg + '');
             }
         };
-        hideForm.ajaxSubmit(options);
+        /**
+         *  先校验banner 名字是佛重复
+         */
+        $.ajax({
+           url: '/management/bannerNameUnique',
+            type: 'POST',
+            data: {
+                bannerImgName: $("input[name='bannerImgName']").val()
+            },
+            success: function (results) {
+                if(results.code === '200') {
+                    /**
+                     *  再上传图片
+                     */
+                    hideForm.ajaxSubmit(options);
+                } else {
+                    bootbox.alert(results.msg);
+                }
+            },
+            error: function (err) {
+                bootbox.alert(err.message);
+            }
+        });
     }
 </script>
 </body>

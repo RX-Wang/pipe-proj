@@ -49,4 +49,26 @@ ProductController.renderAddEdit = function (req, res) {
         result.failed(result.PARAMS_ERROR, res);
 };
 
+/**
+ * 判断产品名称是否重复
+ * @param req
+ * @param res
+ */
+ProductController.productNameUnique = function (req, res) {
+    var productName = req.body.productName || '';
+    if(!productName)
+        return result.failed(result.PARAMS_ERROR, res);
+    else {
+        daos.findOneByOps(productModel, { productName: productName }, function (err, product) {
+            if(err) {
+                return result.failed(result.SERVER_ERROR, res);
+            } else if(product) {
+                return result.failed(result.BGNAME_DUPLICATED, res);
+            } else {
+                return result.success({}, res);
+            }
+        })
+    }
+};
+
 module.exports = ProductController;

@@ -132,6 +132,26 @@ BannerImgController.change_bannerStatus = function (req, res) {
     }
 };
 
+/**
+ * 判断 banner 名字 唯一
+ * @param req
+ * @param res
+ */
+BannerImgController.bannerNameUnique = function (req, res) {
+    var bannerImgName = req.body.bannerImgName || '';
+    if(!bannerImgName)
+        return result.failed(result.PARAMS_ERROR, res);
+    daos.findOneByOps(bannerImgModel, { bannerImgName: bannerImgName }, function (err, banner) {
+        if(err) {
+            return result.failed(result.SERVER_ERROR, res);
+        } else if(banner) {
+            return result.failed(result.BGNAME_DUPLICATED, res);
+        } else {
+            return result.success({}, res);
+        }
+    })
+};
+
 // 上传banner图
 BannerImgController.upload_bannerImg = function(req, res) {
     common.upload_file(req, res, function(err, data) {

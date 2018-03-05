@@ -18,7 +18,7 @@ router.get('/', common.auth_user, function(req, res, next) {
 });
 
                 /**
-                 *  管理后台--banner 相关 ---- START
+                 *  ============>  管理后台--banner 相关 ---- START
                  */
 
 /* 管理后台--banner图片管理首页 */
@@ -26,6 +26,9 @@ router.get('/bannerImg', common.auth_user, BannerImgController.renderIndex);
 
 /* 管理后台--banner图片管理 添加、编辑、详情页 */
 router.get('/bannerImg_add-or-edit-bannerImg/:type', common.auth_user, BannerImgController.renderAddEdit);
+
+/* API-- 判断banner名字是否重复*/
+router.post('/bannerNameUnique', common.auth_user, BannerImgController.bannerNameUnique);
 
 /* API--上传banner图片 */
 router.post('/upload_bannerImg', common.auth_user, upload.single('upload_file'), function(req, res) {
@@ -42,7 +45,7 @@ router.post('/delete_banner', common.auth_user, BannerImgController.deleteBanner
 router.post('/change_bannerStatus', common.auth_user, BannerImgController.change_bannerStatus);
 
                 /**
-                 *  管理后台--banner 相关 ---- END
+                 *  管理后台--banner 相关 ---- END  <============
                  */
 
                 /**
@@ -84,6 +87,9 @@ router.get('/product', common.auth_user, ProductController.renderProduct);
 
 /* 管理后台--产品添加、编辑、详情页 */
 router.get('/product_add-or-edit-bannerImg/:type', common.auth_user, ProductController.renderAddEdit);
+
+/* API-- 判断产品名字是否重复*/
+router.post('/productNameUnique', common.auth_user, ProductController.productNameUnique);
 
                 /**
                  *  管理后台--产品 相关 ---- END
