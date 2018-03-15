@@ -4,6 +4,8 @@ var favicon         = require('serve-favicon');
 var logger          = require('morgan');
 var cookieParser    = require('cookie-parser');
 var bodyParser      = require('body-parser');
+var compression = require('compression')
+
 var config          = require('./config'), settings = config.settings;
 
 var index = require('./routes/index');
@@ -12,6 +14,8 @@ var management = require('./routes/management');
 
 var app = express();
 
+//尽量在其他中间件前使用compression
+app.use(compression());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', require('ejs').__express);

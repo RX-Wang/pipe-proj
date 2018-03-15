@@ -12,8 +12,8 @@ var Promise = require('bluebird');
  * @returns {*}
  */
 exports.login = function (req , res) {
-    var username = req.body.username || null;
-    var password = req.body.password || null;
+    var username = req.body.username || null;   // wtgy
+    var password = req.body.password || null;   // wtgy
     if (!username || !password) {
         return result.failed(result.PARAMS_ERROR , res);
     }
