@@ -25,5 +25,6 @@ module.exports = {
         company_name            : '万通管业',
         company_full_name       : '招远万通管业有限公司',
         webRoot                 : 'http://wtgy.loveruoxi.com' //正式环境
-    }
+    },
+    env: 'production',
 };

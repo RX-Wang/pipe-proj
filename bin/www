@@ -18,6 +18,8 @@ var log4j = require('../log4j');
 // var port = normalizePort(process.env.PORT || '3000');
 var port = normalizePort(config.port);
 app.set('port', port);
+// 设置环境变量
+app.setEnv(config.env);
 
 /* ?? ?? */
 pomelo_logger.configure(log4j);
