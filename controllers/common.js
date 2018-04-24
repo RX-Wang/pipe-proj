@@ -39,38 +39,39 @@ exports.upload_file = function(req, res, cb) {
  */
 exports.auth_user = function (req , res , next) {
     var cookie = req.cookies[settings.cookie_name];
-    if (cookie) {
-        var code = '';
-        try {
-            code = utils.decrypt(cookie , settings.cookie_encrypt_secret);
-        } catch (e) {
-            res.cookie(settings.cookie_name , null , {maxAge: 0});
-            return res.redirect('/management/toLogin?redirect=' + req.originalUrl);
-        }
-
-        var data = JSON.parse(code);
-        if (data && data.id) {
-            var lapse = (Date.now() - data.time);
-            //超过20分钟没有动作则过期
-            if (lapse < (60 * 1000 * 20)) {
-                //每一分钟更新一次最新动作时间
-                if (lapse >= (60 * 1000)) {
-                    data.time = Date.now();
-                    setCookie(data , res);
-                }
-                req.user             = data;
-                res.locals.auth_user = req.user;
-            } else {
-                //清理cookie
+    var _url = req.originalUrl
+    if (_url.indexOf('toLogin') === -1 && _url.indexOf('/management/login') === -1) {
+        if (cookie) {
+            var code = '';
+            try {
+                code = utils.decrypt(cookie , settings.cookie_encrypt_secret);
+            } catch (e) {
                 res.cookie(settings.cookie_name , null , {maxAge: 0});
+                return res.redirect('/management/toLogin?redirect=' + _url);
+            }
+    
+            var data = JSON.parse(code);
+            if (data && data.id) {
+                var lapse = (Date.now() - data.time);
+                //超过20分钟没有动作则过期
+                if (lapse < (60 * 1000 * 20)) {
+                    //每一分钟更新一次最新动作时间
+                    if (lapse >= (60 * 1000)) {
+                        data.time = Date.now();
+                        setCookie(data , res);
+                    }
+                    req.user             = data;
+                    res.locals.auth_user = req.user;
+                    return next();
+                } else {
+                    //清理cookie
+                    res.cookie(settings.cookie_name , null , {maxAge: 0});
+                }
             }
         }
+        return res.redirect('/management/toLogin?redirect=' + _url);
     }
-    if (req.user && req.user.id) {
-        next();
-    } else {
-        res.redirect('/management/toLogin?redirect=' + req.originalUrl);
-    }
+    next();
 };
 
 /**

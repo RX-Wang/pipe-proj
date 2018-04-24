@@ -4,13 +4,14 @@ var favicon         = require('serve-favicon');
 var logger          = require('morgan');
 var cookieParser    = require('cookie-parser');
 var bodyParser      = require('body-parser');
-var compression = require('compression')
+var compression     = require('compression')
 
 var config          = require('./config'), settings = config.settings;
+var common          = require('./controllers/common');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var management = require('./routes/management');
+var index           = require('./routes/index');
+var users           = require('./routes/users');
+var management      = require('./routes/management');
 
 var app = express();
 
@@ -29,7 +30,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res, next) {
+  common.auth_user(req, res, next);
+});
 
 app.use(function(req, res, next){
   res.locals.pathView           = getCurrentUrlTag(req.originalUrl);
@@ -39,6 +45,7 @@ app.use(function(req, res, next){
   res.locals.auth_user          = {};
   next();
 });
+
 app.use('/', index);
 app.use('/users', users);
 app.use('/management', management);
