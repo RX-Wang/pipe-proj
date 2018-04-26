@@ -34,7 +34,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-  common.auth_user(req, res, next);
+  if(req.originalUrl.indexOf('management') > -1){
+    common.auth_user(req, res, next);
+  } else {
+    next();
+  }
 });
 
 app.use(function(req, res, next){

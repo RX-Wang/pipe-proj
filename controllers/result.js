@@ -5,10 +5,10 @@ var code_msg = {code: 'msg'};
 Result.multiReturn = function (action, err, data, res, code) {
     if (err) {
         console.log(action + '--失败--', err.message || '未知失败');
-        return this.failed(code, res);
+        return this.failed(code, res, err.message);
     } else if (data && !data.upserted && data.nModified && data.nModified !== 1) {
         console.log(action + '--失败--', JSON.stringify(data));
-        return this.failed(code, res);
+        return this.failed(code, res, data);
     } else {
         console.log(action + '--成功');
         return this.success(data || {}, res);
