@@ -11,6 +11,7 @@ router.get('/gallery', WebIndexController.renderGallery);
 
 router.get('/meituanToken', function(req, res) {
   console.log('----------', req.query.token);
+  res.send(req.query.token);
 })
 
 module.exports = router;
