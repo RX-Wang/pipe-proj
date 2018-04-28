@@ -10,7 +10,7 @@ router.get('/', WebIndexController.renderIndex);
 router.get('/gallery', WebIndexController.renderGallery);
 
 router.get('/meituanToken', function(req, res) {
-  res.render('aa');
+  res.render('aa', {app: req.query.app});
 })
 
 router.get('/getMeituanToken', function(req, res) {
