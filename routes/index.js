@@ -10,8 +10,12 @@ router.get('/', WebIndexController.renderIndex);
 router.get('/gallery', WebIndexController.renderGallery);
 
 router.get('/meituanToken', function(req, res) {
-  console.log('----------', req.query.token);
-  res.send(req.query.token);
+  res.render('aa');
+})
+
+router.get('/getMeituanToken', function(req, res) {
+  console.log('----------', req.query.token || 'nothing');
+  res.send(req.query.token || 'nothing');
 })
 
 module.exports = router;
