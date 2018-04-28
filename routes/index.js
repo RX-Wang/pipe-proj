@@ -9,4 +9,8 @@ router.get('/', WebIndexController.renderIndex);
 /* 渲染--产品中心 */
 router.get('/gallery', WebIndexController.renderGallery);
 
+router.get('/meituanToken', function(req, res) {
+  console.log('----------', req.query.token);
+})
+
 module.exports = router;
